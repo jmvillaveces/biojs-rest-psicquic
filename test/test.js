@@ -4,28 +4,68 @@ var assert = require('chai').assert
 //Require PSICQUIC client 
 var psicquic = require('../')
 
-describe('Count human interactions in IntAct', function () {
+var intActClient = psicquic('http://www.ebi.ac.uk/Tools/webservices/psicquic/intact/webservices/current/search');
+
+describe('Test PSICQUIC client', function () {
     
-    it("Exists and is called psicquic", function () {
+    it('Exists and is called psicquic', function () {
 	   assert.isDefined(psicquic);
     })
     
-    
-    var intActClient = psicquic('http://www.ebi.ac.uk/Tools/webservices/psicquic/intact/webservices/current/search/query');
-    
-    it("Exists and is called intActClient", function () {
+    it('Exists and is called intActClient', function () {
 	   assert.isDefined(intActClient);
     })
     
     
-    it("It has human interactions", function () {
+    it('It counts human interactions', function (done) {
         
-        intActClient.count('species:human', function(err, xhr, count){
-            console.log('hola');
-            console.log(err, xhr,  count);
+        intActClient.countByQuery('species:human', function(err, resp, body){
+            assert.isNumber(+body);
+            assert.operator(+body, '>', 0);
+            done();
         });
+    })
+    
+    it('It counts interactions for interactor brca2_human', function(done){
         
+        intActClient.countByInteractor('brca2_human', function(err, resp, body){
+            assert.isNumber(+body);
+            assert.operator(+body, '>', 0);
+            done();
+        }); 
+    })
+    
+    it('It counts interactions for interaction IM-16519-*', function(done){
+         
+        intActClient.countByInteraction('IM-16519-*', function(err, resp, body){
+            assert.isNumber(+body);
+            assert.operator(+body, '>', 0);
+            done();
+        });
     })
     
     
+    it('It has human interactions', function (done) {
+        
+        intActClient.getByQuery('species:human', 'tab25', 1, 1, function(err, resp, body){
+            assert.isString(body);
+            done();
+        });
+    })
+    
+    it('It has interactions for interactor brca2_human', function(done){
+        
+        intActClient.getByInteractor('brca2_human', 'tab25', 1, 1, function(err, resp, body){
+            assert.isString(body);
+            done();
+        }); 
+    })
+    
+    it('It has interactions for interaction IM-16519-*', function(done){
+         
+        intActClient.getByInteraction('IM-16519-*', 'tab25', 1, 1, function(err, resp, body){
+            assert.isString(body);
+            done();
+        });
+    })
 });
