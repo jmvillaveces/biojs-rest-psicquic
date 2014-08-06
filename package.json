@@ -25,9 +25,25 @@
   "homepage": "https://github.com/jmVillaveces/biojs-rest-psicquic",
   "devDependencies": {
     "chai": "^1.9.1",
-    "mocha": "^1.21.3"
+    "mocha": "^1.21.3",
+    "tape": "^2.14.0"
   },
   "dependencies": {
     "nets": "^1.0.0"
+  },
+  "testling": {
+    "files": "test.js",
+    "browsers": [
+      "ie/8..latest",
+      "firefox/17..latest",
+      "firefox/nightly",
+      "chrome/22..latest",
+      "chrome/canary",
+      "opera/12..latest",
+      "opera/next",
+      "safari/5.1..latest",
+      "ipad/6.0..latest",
+      "iphone/6.0..latest"
+    ]
   }
 }
