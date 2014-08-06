@@ -1,0 +1,26 @@
+{
+  "name": "biojs-rest-psicquic",
+  "version": "0.0.1",
+  "description": "JS PSICQUIC client",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jmVillaveces/biojs-rest-psicquic.git"
+  },
+  "keywords": [
+    "biojs",
+    "molecular",
+    "interactions",
+    "PSICQUIC",
+    "rest"
+  ],
+  "author": "jmVillaveces",
+  "license": "Apache 2",
+  "bugs": {
+    "url": "https://github.com/jmVillaveces/biojs-rest-psicquic/issues"
+  },
+  "homepage": "https://github.com/jmVillaveces/biojs-rest-psicquic"
+}
