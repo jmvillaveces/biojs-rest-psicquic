@@ -32,7 +32,8 @@
     "nets": "^1.0.0"
   },
   "testling": {
-    "files": "test.js",
+    "harness": "mocha",
+    "files": "test/*.js",
     "browsers": [
       "ie/8..latest",
       "firefox/17..latest",
