@@ -4,7 +4,7 @@ biojs-rest-psicquic
 PSICQUIC client
 
 ```js
-var psicquic = require('../')
+var psicquic = require('biojs-rest-psicquic')
 
 var intActClient = psicquic('http://www.ebi.ac.uk/Tools/webservices/psicquic/intact/webservices/current/search')
 
