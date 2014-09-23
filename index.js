@@ -1,61 +1,81 @@
-//PSICQUIC client
 var xhr = require('nets')
 
-var client = function(serviceUrl){
-    
-    //Private members
-    var _fetch = function(url, callback){
-        xhr({
-            url: url,
-            method: 'GET'
-        }, 
-        callback)
-    }
-    
-    var _createUrl = function(queryType, query, format, firstResult, maxResults){
-        var url = serviceUrl+'/'+queryType+'/'+query+'?format='+format+'&firstResult='+firstResult+'&maxResults='+maxResults
-        return url.replace('//'+queryType, '/'+queryType)
-    }
-    
-    var _get = function(queryType, query, format, firstResult, maxResults, callback){
-        var url = _createUrl(queryType, query, format, firstResult, maxResults)
-        _fetch(url, callback)
-    }
-    
-    var _count = function(queryType, query, callback){
-        _get(queryType, query, 'count', 0, 0, callback)
-    }
-    
-    //Public members 
-    var cli = {}
-    
-    //count
-    cli.countByQuery = function(query, callback){
-        _count('query', query, callback)
-    }
+var _url = '', _proxy = null, _method = 'query', _params = null;
 
-    cli.countByInteractor = function(query, callback){
-        _count('interactor', query, callback)
-    }
+//Private members
+var _fetch = function(url, callback){
+    xhr({
+        url: url,
+        method: 'GET'
+    }, 
+    callback)
+}
 
-    cli.countByInteraction = function(query, callback){
-        _count('interaction', query, callback)
+var _eval_params = function(params){
+    var str = '';
+    if(typeof params === 'string'){
+        return params;
+    }else if(typeof params === 'object'){
+        for(var key in params){
+            if (params.hasOwnProperty(key)) str += key+'='+params[key]+'&';
+        }
     }
+    return str;
+}
+
+var _createUrl = function(method, query, params){
     
-    //get by
-    cli.getByQuery = function(query, format, firstResult, maxResults, callback){
-        _get('query', query, format, firstResult, maxResults, callback)
-    }
-
-    cli.getByInteractor = function(query, format, firstResult, maxResults, callback){
-        _get('interactor', query, format, firstResult, maxResults, callback)
-    }
-
-    cli.getByInteraction = function(query, format, firstResult, maxResults, callback){
-        _get('interaction', query, format, firstResult, maxResults, callback)
-    }
+    var paramsStr = ''; 
+    if(params !== null)
+        paramsStr = '?'+_eval_params(params);
     
-    return cli
+    var url = _url+'/'+method+'/'+query+paramsStr;
+    url = url.replace('//'+method, '/'+method)
+    
+    if(_proxy === null) return url;
+    
+    return _proxy +'?url='+url;
+}
+
+//Public members
+var psicquicServer = function(){}
+    
+psicquicServer.url = function(_){
+    if (!arguments.length)
+        return _url;
+    _url = _;
+    return psicquicServer;
 };
 
-module.exports = client
+psicquicServer.proxy = function(_){
+    if (!arguments.length)
+        return _proxy;
+    _proxy = _;
+    return psicquicServer;
+};
+
+psicquicServer.method = function(_){
+    if (!arguments.length)
+        return _method;
+    _method = _;
+    return psicquicServer;
+};
+
+psicquicServer.params = function(_){
+    if (!arguments.length)
+        return _params;
+    _params = _;
+    return psicquicServer;
+};
+
+psicquicServer.query = function(query, callback){
+    var url = _createUrl(_method, query, _params);
+    _fetch(url, callback);
+};
+
+psicquicServer.count = function(query, callback){
+    var url = _createUrl(_method, query, {format:'count'});
+    _fetch(url, callback);
+}
+
+module.exports = psicquicServer;

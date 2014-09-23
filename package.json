@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/jmVillaveces/biojs-rest-psicquic/issues"
   },
-  "homepage": "https://github.com/jmVillaveces/biojs-rest-psicquic"
+  "homepage": "https://github.com/jmVillaveces/biojs-rest-psicquic",
+  "devDependencies": {
+    "mocha": "^1.21.4"
+  }
 }
