@@ -1,6 +1,6 @@
 {
   "name": "biojs-rest-psicquic",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "JS PSICQUIC client",
   "main": "index.js",
   "scripts": {
