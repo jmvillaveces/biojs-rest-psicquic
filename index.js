@@ -78,4 +78,18 @@ psicquicServer.count = function(query, callback){
     _fetch(url, callback);
 }
 
+psicquicServer.getInteractionsForIds = function(ids, params, callback){
+    var query = 'idA:('+ids.join(' OR ')+') AND idB:('+ids.join(' OR ')+')';
+        
+    var url = _createUrl('query', query, params);
+    _fetch(url, callback);
+};
+    
+psicquicServer.getExpandedInteractionsForIds = function(ids, params, callback){
+    var query = 'identifier:('+ids.join(' OR ')+')';
+    
+    var url = _createUrl('query', query, params);
+    _fetch(url, callback);
+};
+
 module.exports = psicquicServer;

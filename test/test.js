@@ -71,6 +71,22 @@ describe('Test PSICQUIC client', function () {
         }); 
     })
     
+    it('It has interactions for [P52701,Q9CXE6,Q7T6Y0,Q682D3]', function(done){
+         
+        psicquic.getInteractionsForIds(['P52701','Q9CXE6','Q7T6Y0','Q682D3'], {firstResult:0, maxResults:10}, function(err, resp, body){
+            assert.isString(body);
+            done();
+        }); 
+    })
+    
+    it('It has expanded interactions for [P52701,Q9CXE6,Q7T6Y0,Q682D3]', function(done){
+         
+        psicquic.getExpandedInteractionsForIds(['P52701','Q9CXE6','Q7T6Y0','Q682D3'], {firstResult:0, maxResults:10}, function(err, resp, body){
+            assert.isString(body);
+            done();
+        }); 
+    })
+    
     it('Proxy points to http://localhost/Interaction-Atlas/dist/proxy', function(){
         var proxy = 'http://localhost/Interaction-Atlas/dist/proxy';
         psicquic.proxy(proxy);
