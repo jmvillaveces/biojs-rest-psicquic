@@ -30,9 +30,7 @@ var _createUrl = function(method, query, params){
         paramsStr = '?'+_eval_params(params);
     
     var url = _url+'/'+method+'/'+query+paramsStr;
-    url = url.replace('//'+method, '/'+method)
-    
-    if(_proxy === null) return url;
+    url = url.replace('//'+method, '/'+method);
     
     return _processProxy(url);
 }
@@ -85,5 +83,19 @@ psicquicServer.count = function(query, callback){
     var url = _createUrl(_method, query, {format:'count'});
     _fetch(url, callback);
 }
+
+psicquicServer.getInteractionsForIds = function(ids, params, callback){
+    var query = 'idA:('+ids.join(' OR ')+') AND idB:('+ids.join(' OR ')+')';
+        
+    var url = _createUrl('query', query, params);
+    _fetch(url, callback);
+};
+    
+psicquicServer.getExpandedInteractionsForIds = function(ids, params, callback){
+    var query = 'identifier:('+ids.join(' OR ')+')';
+    
+    var url = _createUrl('query', query, params);
+    _fetch(url, callback);
+};
 
 module.exports = psicquicServer;
