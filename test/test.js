@@ -77,4 +77,15 @@ describe('Test PSICQUIC client', function () {
         
         assert.equal(proxy, psicquic.proxy());
     })
+    
+    it('Proxy is function and points to https://cors-anywhere.herokuapp.com/', function(){
+        var proxy = function(url){
+            return 'https://cors-anywhere.herokuapp.com/'+url;
+        };
+        psicquic.proxy(proxy);
+        
+        assert.equal('function', typeof psicquic.proxy());
+        assert.equal('https://cors-anywhere.herokuapp.com/', psicquic.proxy()(''));
+    })
+    
 });

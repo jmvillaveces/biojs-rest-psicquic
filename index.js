@@ -34,7 +34,15 @@ var _createUrl = function(method, query, params){
     
     if(_proxy === null) return url;
     
-    return _proxy +'?url='+url;
+    return _processProxy(url);
+}
+
+var _processProxy = function(url){
+    if (typeof _proxy === 'function') return _proxy(url);
+    
+    if(typeof _proxy === 'string') return _proxy +'?url='+url;
+    
+    return url;
 }
 
 //Public members
